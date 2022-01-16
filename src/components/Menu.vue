@@ -1,0 +1,65 @@
+<template>
+  <div class="menu-main">
+    <div class="menu-content">
+      <div class="highscore">
+        {{ store.getHighscore }}
+      </div>
+      <div class="buttons-container">
+        <div class="btn-wrapper">
+          <button
+            class="btn-item btn-pop"
+            @click="store.updatePage('game')"
+          >
+            start
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { useStore } from '@/store/index';
+import { ref } from 'vue';
+const store = useStore();
+
+
+window.addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    store.updatePage('game');
+  }
+});
+</script>
+<style lang="scss" scoped>
+.menu-main {
+  height: 100%;
+}
+.menu-content {
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  color: #ec7b7b;
+  position: relative;
+}
+.highscore {
+  font-size: 101px;
+}
+
+.buttons-container {
+  position: absolute;
+  bottom: 4rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn-item {
+  width: 169px;
+  height: 78px;
+  background-color: white;
+  color: #ec7b7b;
+  border-radius: 16px;
+  font-size: 32px;
+  border: none;
+}
+</style>
