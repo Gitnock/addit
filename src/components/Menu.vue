@@ -24,7 +24,7 @@ const store = useStore();
 
 
 window.addEventListener('keyup', (event) => {
-  if (event.key === 'Enter') {
+  if (event.code === 'Space') {
     store.updatePage('game');
   }
 });

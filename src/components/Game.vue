@@ -10,11 +10,11 @@
       </div>
       <div class="f-question">{{ quest }}</div>
       <div class="buttons-container">
-        <div class="btn-wrapper">
-          <button class="btn-item" @click="check(btn1)" @keyup.left="check(btn1)">{{ btn1 }}</button>
+        <div class="btn-wrapper" id="btn1">
+          <button class="btn-item" @click="input = btn1" >{{ btn1 }} </button>
         </div>
-        <div class="btn-wrapper">
-          <button class="btn-item" @click="check(btn2)">{{ btn2 }}</button>
+        <div class="btn-wrapper" id="btn2">
+          <button class="btn-item" @click="input = btn2" >{{ btn2 }}</button>
         </div>
       </div>
     </div>
@@ -22,10 +22,12 @@
 </template>
 <script lang="ts" setup>
 import { useStore } from '@/store/index';
+import { onUnmounted } from 'vue';
 import { ref } from 'vue';
 const store = useStore();
 let count = ref(0);
 let quest = ref('');
+let input = ref(0);
 let btn1 = ref(0);
 let btn2 = ref(0);
 let ans = ref(0);
@@ -33,6 +35,7 @@ let score = ref(0);
 let isStart = ref(true);
 let interval: any;
 let level: number = 1;
+let gLoop: any = null;
 
 // this function return a rundom number between min and max (both included)
 function getRndInteger(min: number, max: number) {
@@ -44,11 +47,28 @@ function countDown() {
     count.value--;
     if (count.value === 0) {
       clearInterval(interval);
-      console.log(`out of time`);
-      endGame();
     }
   }, 1000);
 }
+
+function gameLoop() {
+  //GAME LOOP contents here
+  console.log(`init answer`);
+  if (input.value !== 0) {
+    console.log(`check answer ${input.value}`);
+    check(input.value);
+    input.value = 0;
+  }
+
+  if (count.value === 0) {
+    endGame();
+    console.log(`out of time`);
+  }
+  if (gLoop != null) {
+    window.requestAnimationFrame(gameLoop);
+  }
+}
+
 function init(max: number) {
   clearInterval(interval);
   countDown();
@@ -78,43 +98,66 @@ function check(num: number) {
   }
 }
 function endGame() {
+  window.cancelAnimationFrame(gLoop);
+  gLoop = null;
   clearInterval(interval);
   if (score.value > store.getHighscore) {
     store.updateHighscore(score.value);
   }
+
   store.updatePage('home');
 }
 
+function addBtnAnim(id: string) {
+  const element = document.getElementById(id);
+  if (element != null) {
+    element.classList.add('btn-active');
+    setTimeout(() => {
+      element.classList.remove('btn-active');
+    }, 100);
+  }
+}
+
 //keyup events
-window.addEventListener("keydown", function (event) {
-  if (event.defaultPrevented) {
-    return; // Do nothing if the event was already processed
-  }
+window.addEventListener(
+  'keydown', (event)=> {
+    // if (event.defaultPrevented) {
+    //   return; // Do nothing if the event was already processed
+    // }
 
-  switch (event.key) {
-    case "Left": // IE/Edge specific value
-    case "ArrowLeft":
-        check(btn1.value);
-      break;
-    case "Right": // IE/Edge specific value
-    case "ArrowRight":
-      check(btn2.value);
-      break;
-    case "Esc": // IE/Edge specific value
-    case "Escape":
-      // Do something for "esc" key press.
-      break;
-    default:
-      return; // Quit when this doesn't handle the key event.
-  }
+    switch (event.key) {
+      case 'Left': // IE/Edge specific value
+      case 'ArrowLeft':
+        input.value = btn1.value;
+        addBtnAnim('btn1');
+        break;
+      case 'Right': // IE/Edge specific value
+      case 'ArrowRight':
+        input.value = btn2.value;
+        addBtnAnim('btn2');
+        break;
+      case 'Esc': // IE/Edge specific value
+      case 'Escape':
+        // Do something for "esc" key press.
+        break;
+      default:
+        return; // Quit when this doesn't handle the key event.
+    }
 
-  // Cancel the default action to avoid it being handled twice
-  event.preventDefault();
-}, true);
-
+    // Cancel the default action to avoid it being handled twice
+    event.preventDefault();
+  },
+  false,
+);
 
 //start game
+gLoop = window.requestAnimationFrame(gameLoop);
+
 init(level);
+
+onUnmounted(() => {
+  window.cancelAnimationFrame(gLoop);
+});
 </script>
 <style lang="scss" scoped>
 .game-main {
