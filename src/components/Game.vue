@@ -5,7 +5,7 @@
         <div
           class="bar"
           ref="sumbitBar"
-          :style="{ width: (count / 2) * 100 + '%' }"
+          :style="{ width: (100 / 2000) * count + '%' }"
         ></div>
       </div>
       <div class="f-question roboto-mono-m">{{ quest }}</div>
@@ -42,14 +42,15 @@ function getRndInteger(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function countDown() {
-  count.value = 2;
-  // interval = setInterval(() => {
-  //   count.value--;
-  //   if (count.value === 0) {
-  //     clearInterval(interval);
-  //   }
-  // }, 1000);
+  count.value = 2000;
+  interval = setInterval(() => {
+    count.value -= 100;
+    if (count.value === 0) {
+      clearInterval(interval);
+    }
+  }, 100);
 }
+
 
 function gameLoop() {
   //GAME LOOP contents here
@@ -176,8 +177,9 @@ onUnmounted(() => {
   top: 0;
 }
 .bar {
-  width: 10%;
+  width: 100%;
   height: 100%;
+  transition: width 100ms linear;
   background-color: whitesmoke;
 }
 //question
