@@ -1,3 +1,19 @@
+
+//fonts
+.roboto-mono-r {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 400;
+}
+.roboto-mono-m {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 500;
+}
+.roboto-mono-b {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 700;
+}
+
+
 @keyframes popOutAnim {
   0% {
     transform: scale(1);
@@ -16,14 +32,6 @@
   }
 }
 
-@media (hover: hover) {
-  .btn-wrapper {
-    &:hover {
-      animation: popOutAnim 100ms ease-in-out alternate-reverse;
-      border-color: rgb(255, 255, 255);
-    }
-  }
-}
 
 .btn-wrapper {
     background-color: transparent;
@@ -42,3 +50,14 @@
   animation: popOutAnim 100ms ease-in-out alternate;
   border-color: rgb(255, 255, 255);
 }
+
+.input-tip{
+  margin-bottom: 24px;
+}
+.d-center-w{
+  display: flex;
+  justify-content: center;
+  // align-items: center;
+}
+
+

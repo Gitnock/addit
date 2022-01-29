@@ -8,13 +8,13 @@
           :style="{ width: (count / 2) * 100 + '%' }"
         ></div>
       </div>
-      <div class="f-question">{{ quest }}</div>
+      <div class="f-question roboto-mono-m">{{ quest }}</div>
       <div class="buttons-container">
         <div class="btn-wrapper" id="btn1">
-          <button class="btn-item" @click="input = btn1" >{{ btn1 }} </button>
+          <button class="btn-item roboto-mono-r" @click="input = btn1" >{{ btn1 }} </button>
         </div>
         <div class="btn-wrapper" id="btn2">
-          <button class="btn-item" @click="input = btn2" >{{ btn2 }}</button>
+          <button class="btn-item roboto-mono-r" @click="input = btn2" >{{ btn2 }}</button>
         </div>
       </div>
     </div>
@@ -43,26 +43,23 @@ function getRndInteger(min: number, max: number) {
 }
 function countDown() {
   count.value = 2;
-  interval = setInterval(() => {
-    count.value--;
-    if (count.value === 0) {
-      clearInterval(interval);
-    }
-  }, 1000);
+  // interval = setInterval(() => {
+  //   count.value--;
+  //   if (count.value === 0) {
+  //     clearInterval(interval);
+  //   }
+  // }, 1000);
 }
 
 function gameLoop() {
   //GAME LOOP contents here
-  console.log(`init answer`);
   if (input.value !== 0) {
-    console.log(`check answer ${input.value}`);
     check(input.value);
     input.value = 0;
   }
 
   if (count.value === 0) {
     endGame();
-    console.log(`out of time`);
   }
   if (gLoop != null) {
     window.requestAnimationFrame(gameLoop);
@@ -90,7 +87,6 @@ function check(num: number) {
     score.value++;
     init(level++);
   } else {
-    console.log(`Q:${quest.value} you:${num} A:${ans.value}`);
     endGame();
   }
   if (isStart.value === true) {
@@ -168,6 +164,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 //bar
 .bar-container {
@@ -185,8 +182,8 @@ onUnmounted(() => {
 }
 //question
 .f-question {
-  font-size: 101px;
-  color: #ec7b7b;
+  font-size: 82px;
+  color: white;
 }
 //buttons
 .buttons-container {
@@ -196,13 +193,13 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 8px;
 }
 .btn-item {
   width: 169px;
   height: 78px;
-  background-color: white;
-  color: #ec7b7b;
+  background-color: #262526;
+  color: white;
   border-radius: 16px;
   font-size: 32px;
   border: none;

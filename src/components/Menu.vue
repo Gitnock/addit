@@ -1,17 +1,22 @@
 <template>
   <div class="menu-main">
     <div class="menu-content">
-      <div class="highscore">
+      <div class="highscore roboto-mono-m">
         {{ store.getHighscore }}
       </div>
-      <div class="buttons-container">
-        <div class="btn-wrapper">
-          <button
-            class="btn-item btn-pop"
-            @click="store.updatePage('game')"
-          >
-            start
-          </button>
+      <div class="bot-container">
+        <div class="d-center-w input-tip">
+          <div class='bx-flashing' >press [space] to start, arrow keys to select</div>
+        </div>
+        <div class="buttons-container">
+          <div class="btn-wrapper">
+            <button
+              class="btn-item btn-pop roboto-mono-r"
+              @click="store.updatePage('game')"
+            >
+              start
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -21,7 +26,6 @@
 import { useStore } from '@/store/index';
 import { ref } from 'vue';
 const store = useStore();
-
 
 window.addEventListener('keyup', (event) => {
   if (event.code === 'Space') {
@@ -38,16 +42,20 @@ window.addEventListener('keyup', (event) => {
   justify-content: center;
   display: flex;
   align-items: center;
-  color: #ec7b7b;
+  color: white;
   position: relative;
 }
 .highscore {
   font-size: 101px;
 }
 
-.buttons-container {
+.bot-container {
   position: absolute;
   bottom: 4rem;
+}
+.buttons-container {
+  // position: absolute;
+  // bottom: 4rem;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -56,8 +64,8 @@ window.addEventListener('keyup', (event) => {
 .btn-item {
   width: 169px;
   height: 78px;
-  background-color: white;
-  color: #ec7b7b;
+  background-color: #262526;
+  color: white;
   border-radius: 16px;
   font-size: 32px;
   border: none;
