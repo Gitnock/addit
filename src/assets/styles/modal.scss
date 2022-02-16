@@ -26,7 +26,8 @@
     background-color: $c2_dark;
     border-radius: 28px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-    transition: all 0.3s ease;
+    // transition: all 0.3s ease;
+    animation: bounce-in 0.2s;
   }
   
   
@@ -43,27 +44,19 @@
   .modal-body {
     height: 100%;
   }
-
   
-  .modal-enter {
-    opacity: 100%;
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.25);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
   
-  .modal-leave-active {
-    opacity: 0;
-  }
-  
-  .modal-enter .modal-container,
-  .modal-leave-active .modal-container {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
-  
-  .modal-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
   @media screen and (max-width: 800px) {
     .modal-container-big {
       width: 100%;
