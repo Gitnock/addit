@@ -11,18 +11,26 @@
       <div class="f-question roboto-mono-m">{{ quest }}</div>
       <div class="buttons-container">
         <div class="btn-wrapper" id="btn1">
-          <button class="btn-item roboto-mono-r" @click="input = btn1" >{{ btn1 }} </button>
+          <button class="btn-item roboto-mono-r" @click="input = btn1">
+            {{ btn1 }}
+          </button>
         </div>
         <div class="btn-wrapper" id="btn2">
-          <button class="btn-item roboto-mono-r" @click="input = btn2" >{{ btn2 }}</button>
+          <button class="btn-item roboto-mono-r" @click="input = btn2">
+            {{ btn2 }}
+          </button>
         </div>
       </div>
     </div>
+    <teleport to="body">
+      <lastScoreVue :score="score" v-if="isGameOver" />
+    </teleport>
   </div>
 </template>
 <script lang="ts" setup>
+import lastScoreVue from '@/modals/lastScore.vue';
 import { useStore } from '@/store/index';
-import { onUnmounted } from 'vue';
+import { onUnmounted, inject } from 'vue';
 import { ref } from 'vue';
 const store = useStore();
 let count = ref(0);
@@ -33,9 +41,11 @@ let btn2 = ref(0);
 let ans = ref(0);
 let score = ref(0);
 let isStart = ref(true);
+let isGameOver = ref(false);
 let interval: any;
 let level: number = 1;
 let gLoop: any = null;
+
 
 // this function return a rundom number between min and max (both included)
 function getRndInteger(min: number, max: number) {
@@ -46,7 +56,7 @@ function countDown() {
   interval = setInterval(() => {
     count.value -= 100;
     if (count.value === 0) {
-      clearInterval(interval);
+     gameOver();
     }
   }, 100);
 }
@@ -57,10 +67,6 @@ function gameLoop() {
   if (input.value !== 0) {
     check(input.value);
     input.value = 0;
-  }
-
-  if (count.value === 0) {
-    endGame();
   }
   if (gLoop != null) {
     window.requestAnimationFrame(gameLoop);
@@ -83,25 +89,28 @@ function init(max: number) {
   }
 }
 
+function gameOver() {
+  isGameOver.value = true;
+  clearInterval(interval);
+  window.cancelAnimationFrame(gLoop);
+  gLoop = null;
+  if (score.value > store.getHighscore) {
+    store.updateHighScore(score.value);
+  }
+}
+
 function check(num: number) {
   if (num === ans.value) {
     score.value++;
     init(level++);
   } else {
-    endGame();
+    gameOver();
   }
   if (isStart.value === true) {
     isStart.value = false;
   }
 }
 function endGame() {
-  window.cancelAnimationFrame(gLoop);
-  gLoop = null;
-  clearInterval(interval);
-  if (score.value > store.getHighscore) {
-    store.updateHighscore(score.value);
-  }
-
   store.updatePage('home');
 }
 
@@ -114,6 +123,7 @@ function addBtnAnim(id: string) {
     }, 100);
   }
 }
+
 
 //keyup events
 window.addEventListener(
@@ -149,8 +159,14 @@ window.addEventListener(
 
 //start game
 gLoop = window.requestAnimationFrame(gameLoop);
-
 init(level);
+
+//event bus
+const emitter:any = inject('emitter');
+emitter.on('endGame', () => {
+  endGame();
+});
+
 
 onUnmounted(() => {
   window.cancelAnimationFrame(gLoop);

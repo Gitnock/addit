@@ -4,6 +4,16 @@ import '@fontsource/roboto-mono/500.css'; // Weight 500.
 import '@fontsource/roboto-mono/700.css'; // weight 700.
 import { useStore } from '@/store/index';
 let store = useStore();
+if(localStorage.getItem('highscore') === null) {
+  localStorage.setItem('highscore', '0');
+}else {
+  const hightscore = localStorage.getItem('highscore');
+  if (typeof hightscore === 'string'){
+    store.updateHighScore(parseInt(hightscore));
+  }
+  
+}
+
 import Menu from './components/Menu.vue';
 import Game from './components/Game.vue';
 </script>

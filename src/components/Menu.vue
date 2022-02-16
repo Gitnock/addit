@@ -6,16 +6,38 @@
       </div>
       <div class="bot-container">
         <div class="d-center-w input-tip">
-          <div class='bx-flashing' >press [space] to start, arrow keys to select</div>
+          <div class="bx-flashing">
+            press [space] to start, arrow keys to select
+          </div>
         </div>
         <div class="buttons-container">
-          <div class="btn-wrapper">
-            <button
-              class="btn-item btn-pop roboto-mono-r"
-              @click="store.updatePage('game')"
-            >
-              start
-            </button>
+          <div class="btn-top">
+            <div class="btn-wrapper flex-fill">
+              <button
+                class="btn-item btn-item-online btn-pop roboto-mono-m"
+                @click=""
+              >
+                play online
+              </button>
+            </div>
+            <div class="btn-wrapper">
+              <button
+                class="btn-item btn-item-settings btn-pop roboto-mono-m"
+                @click="store.updateHighScore(0)"
+              >
+                <i class="bx bx-reset"></i>
+              </button>
+            </div>
+          </div>
+          <div class="btn-bot">
+            <div class="btn-wrapper-full">
+              <button
+                class="btn-item btn-item-start btn-pop roboto-mono-r"
+                @click="store.updatePage('game')"
+              >
+                start
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -52,22 +74,47 @@ window.addEventListener('keyup', (event) => {
 .bot-container {
   position: absolute;
   bottom: 4rem;
+  width: 100%;
 }
 .buttons-container {
-  // position: absolute;
-  // bottom: 4rem;
-  width: 100%;
+  // width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
-.btn-item {
-  width: 169px;
-  height: 78px;
+.btn-top {
+  width: 100%;
+  display: flex;
+  max-width: 378px;
+}
+.btn-bot {
+  width: 100%;
+  max-width: 378px;
+}
+.btn-item-start {
+  width: 100%;
   background-color: #262526;
   color: white;
-  border-radius: 16px;
   font-size: 32px;
+}
+.btn-item-online {
+  width: 100%;
+  background-color: #25514D;
+  color: #00CD69;
+  font-size: 23px;
+}
+.btn-item-settings {
+  width: 78px;
+  background-color: #4B1B0F;
+  color: #FF5441;
+  font-size: 32px;
+}
+.btn-item {
+  height: 78px;
+  border-radius: 8px;
   border: none;
+}
+.flex-fill{
+  flex-grow: 1;
 }
 </style>

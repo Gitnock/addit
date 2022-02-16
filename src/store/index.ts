@@ -18,8 +18,9 @@ export const useStore = defineStore('main', {
     }
   },
   actions: {
-    updateHighscore(score: number) {
+    updateHighScore(score: number) {
       this.highscore = score;
+      localStorage.setItem('highscore', score.toString());
     },
     updatePage(page: string) {
       this.page = page;

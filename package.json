@@ -1,6 +1,6 @@
 {
   "name": "addit",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
@@ -10,6 +10,7 @@
     "@fontsource/roboto-mono": "^4.5.1",
     "@vueuse/sound": "^1.1.7",
     "firebase": "^9.6.4",
+    "mitt": "^3.0.0",
     "pinia": "^2.0.9",
     "vue": "^3.2.25"
   },
