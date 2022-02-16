@@ -120,7 +120,7 @@ function addBtnAnim(id: string) {
     element.classList.add('btn-active');
     setTimeout(() => {
       element.classList.remove('btn-active');
-    }, 100);
+    }, 50);
   }
 }
 

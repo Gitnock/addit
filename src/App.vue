@@ -2,6 +2,8 @@
 import '@fontsource/roboto-mono/400.css'; // Weight 400
 import '@fontsource/roboto-mono/500.css'; // Weight 500.
 import '@fontsource/roboto-mono/700.css'; // weight 700.
+import Menu from './components/Menu.vue';
+import Game from './components/Game.vue';
 import { useStore } from '@/store/index';
 let store = useStore();
 if(localStorage.getItem('highscore') === null) {
@@ -14,12 +16,10 @@ if(localStorage.getItem('highscore') === null) {
   
 }
 
-import Menu from './components/Menu.vue';
-import Game from './components/Game.vue';
 </script>
 
-<template>
-  <div class="main-phone">
+<template >
+  <div class="main-phone" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div class="content-container">
       <Menu v-if="store.getPage === 'home'" />
       <Game v-else-if="store.getPage === 'game'" />
