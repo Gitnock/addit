@@ -1,25 +1,28 @@
 <script setup lang="ts">
-import '@fontsource/roboto-mono/400.css'; // Weight 400
-import '@fontsource/roboto-mono/500.css'; // Weight 500.
-import '@fontsource/roboto-mono/700.css'; // weight 700.
-import Menu from './components/Menu.vue';
-import Game from './components/Game.vue';
-import { useStore } from '@/store/index';
+import "@fontsource/roboto-mono/400.css"; // Weight 400
+import "@fontsource/roboto-mono/500.css"; // Weight 500.
+import "@fontsource/roboto-mono/700.css"; // weight 700.
+import Menu from "./components/Menu.vue";
+import Game from "./components/Game.vue";
+import { useStore } from "@/store/index";
 let store = useStore();
-if(localStorage.getItem('highscore') === null) {
-  localStorage.setItem('highscore', '0');
-}else {
-  const hightscore = localStorage.getItem('highscore');
-  if (typeof hightscore === 'string'){
+if (localStorage.getItem("highscore") === null) {
+  localStorage.setItem("highscore", "0");
+} else {
+  const hightscore = localStorage.getItem("highscore");
+  if (typeof hightscore === "string") {
     store.updateHighScore(parseInt(hightscore));
   }
-  
 }
-
 </script>
 
-<template >
-  <div class="main-phone" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<template>
+  <div
+    class="main-phone"
+    oncontextmenu="return false"
+    onselectstart="return false"
+    ondragstart="return false"
+  >
     <div class="content-container">
       <Menu v-if="store.getPage === 'home'" />
       <Game v-else-if="store.getPage === 'game'" />
@@ -28,7 +31,7 @@ if(localStorage.getItem('highscore') === null) {
 </template>
 
 <style lang="scss">
-@import '@/assets/styles/init.scss';
+@import "@/assets/styles/init.scss";
 
 #app {
   background-color: grey;
