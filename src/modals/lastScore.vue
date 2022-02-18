@@ -2,30 +2,30 @@
   <div class="modal-mask">
     <div class="modal-wrapper">
       <div class="modal-container">
-          <div class="modal-header"></div>
+        <div class="modal-header"></div>
 
-          <div class="modal-body">
-            <div class="body-content">
-              <div class="modal-title roboto-mono-m">your just got</div>
-              <div class="score-font roboto-mono-m">{{ props.score }}</div>
-            </div>
+        <div class="modal-body">
+          <div class="body-content">
+            <div class="modal-title roboto-mono-m">your just got</div>
+            <div class="score-font roboto-mono-m">{{ props.score }}</div>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { inject } from 'vue';
-const emitter: any = inject('emitter'); // Inject `emitter`
+import { inject } from "vue";
+const emitter: any = inject("emitter"); // Inject `emitter`
 const props = defineProps({
   score: Number,
 });
 setTimeout(() => {
-  emitter.emit('endGame', 'end');
-}, 500);
+  emitter.emit("endGame", "end");
+}, 1000);
 </script>
 <style lang="scss" scoped>
-@import '@/assets/styles/modal.scss';
+@import "@/assets/styles/modal.scss";
 
 .body-content {
   display: flex;

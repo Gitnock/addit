@@ -28,13 +28,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import lastScoreVue from '@/modals/lastScore.vue';
-import { useStore } from '@/store/index';
-import { onUnmounted, inject } from 'vue';
-import { ref } from 'vue';
+import lastScoreVue from "@/modals/lastScore.vue";
+import { useStore } from "@/store/index";
+import { onUnmounted, inject } from "vue";
+import { ref } from "vue";
 const store = useStore();
 let count = ref(0);
-let quest = ref('');
+let quest = ref("");
 let input = ref(0);
 let btn1 = ref(0);
 let btn2 = ref(0);
@@ -46,7 +46,6 @@ let interval: any;
 let level: number = 1;
 let gLoop: any = null;
 
-
 // this function return a rundom number between min and max (both included)
 function getRndInteger(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -56,11 +55,10 @@ function countDown() {
   interval = setInterval(() => {
     count.value -= 100;
     if (count.value === 0) {
-     gameOver();
+      gameOver();
     }
   }, 100);
 }
-
 
 function gameLoop() {
   //GAME LOOP contents here
@@ -111,40 +109,40 @@ function check(num: number) {
   }
 }
 function endGame() {
-  store.updatePage('home');
+  store.updatePage("home");
 }
 
 function addBtnAnim(id: string) {
   const element = document.getElementById(id);
   if (element != null) {
-    element.classList.add('btn-active');
+    element.classList.add("btn-active");
     setTimeout(() => {
-      element.classList.remove('btn-active');
+      element.classList.remove("btn-active");
     }, 50);
   }
 }
 
-
 //keyup events
 window.addEventListener(
-  'keydown', (event)=> {
+  "keydown",
+  (event) => {
     // if (event.defaultPrevented) {
     //   return; // Do nothing if the event was already processed
     // }
 
     switch (event.key) {
-      case 'Left': // IE/Edge specific value
-      case 'ArrowLeft':
+      case "Left": // IE/Edge specific value
+      case "ArrowLeft":
         input.value = btn1.value;
-        addBtnAnim('btn1');
+        addBtnAnim("btn1");
         break;
-      case 'Right': // IE/Edge specific value
-      case 'ArrowRight':
+      case "Right": // IE/Edge specific value
+      case "ArrowRight":
         input.value = btn2.value;
-        addBtnAnim('btn2');
+        addBtnAnim("btn2");
         break;
-      case 'Esc': // IE/Edge specific value
-      case 'Escape':
+      case "Esc": // IE/Edge specific value
+      case "Escape":
         // Do something for "esc" key press.
         break;
       default:
@@ -154,7 +152,7 @@ window.addEventListener(
     // Cancel the default action to avoid it being handled twice
     event.preventDefault();
   },
-  false,
+  false
 );
 
 //start game
@@ -162,11 +160,10 @@ gLoop = window.requestAnimationFrame(gameLoop);
 init(level);
 
 //event bus
-const emitter:any = inject('emitter');
-emitter.on('endGame', () => {
+const emitter: any = inject("emitter");
+emitter.on("endGame", () => {
   endGame();
 });
-
 
 onUnmounted(() => {
   window.cancelAnimationFrame(gLoop);
