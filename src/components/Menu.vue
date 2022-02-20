@@ -12,7 +12,7 @@
         <div class="buttons-container">
           <div class="btn-top">
             <div class="btn-wrapper flex-fill">
-              <button class="btn-item btn-item-online btn-pop roboto-mono-m" @click="">
+              <button class="btn-item btn-item-online btn-pop roboto-mono-m">
                 play online
               </button>
             </div>
@@ -29,7 +29,7 @@
             <div class="btn-wrapper-full">
               <button
                 class="btn-item btn-item-start btn-pop roboto-mono-r"
-                @click="store.updatePage('game')"
+                @click="startGame()"
               >
                 start
               </button>
@@ -42,13 +42,34 @@
 </template>
 <script lang="ts" setup>
 import { useStore } from "@/store/index";
-import { ref } from "vue";
+import { ref, onUnmounted } from "vue";
+
+import clickSfx from "../assets/normal_click.mp3";
+import { Howl } from "howler";
 const store = useStore();
 
-window.addEventListener("keyup", (event) => {
-  if (event.code === "Space") {
-    store.updatePage("game");
-  }
+const playMusic = () => {
+  const playFound = new Howl({
+    src: [clickSfx],
+    volume: 0.01,
+  });
+
+  playFound.play();
+};
+const startGame = () => {
+  store.updatePage("game");
+  playMusic();
+};
+const keyboardEvents = () => {
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "Space") {
+      startGame();
+    }
+  });
+};
+window.addEventListener("keyup", keyboardEvents);
+onUnmounted(() => {
+  window.removeEventListener("keyup", keyboardEvents);
 });
 </script>
 <style lang="scss" scoped>
