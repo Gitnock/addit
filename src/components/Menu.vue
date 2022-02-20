@@ -51,7 +51,7 @@ const store = useStore();
 const playMusic = () => {
   const playFound = new Howl({
     src: [clickSfx],
-    volume: 0.01,
+    volume: 0.05,
   });
 
   playFound.play();

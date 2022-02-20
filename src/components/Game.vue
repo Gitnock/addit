@@ -157,7 +157,7 @@ const increaseRate = () => {
 const playCorrect = () => {
   sound = new Howl({
     src: [clickSfx],
-    volume: 0.01,
+    volume: 0.09,
     rate: playRate.value,
   });
 
