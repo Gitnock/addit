@@ -149,7 +149,7 @@ onUnmounted(() => {
 }
 .versionTxt {
   position: absolute;
-  bottom: 20px;
+  bottom: 15px;
   right: 45%;
   font-size: 14px;
   color: gray;

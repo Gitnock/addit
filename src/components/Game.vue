@@ -163,7 +163,6 @@ const increaseRate = () => {
 };
 
 const playCorrect = () => {
-  console.log("rate", playRate.value);
   sound.rate(playRate.value);
   increaseRate();
   startTimer();
