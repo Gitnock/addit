@@ -94,6 +94,13 @@ function init(max: number) {
     btn2.value = ans.value;
   }
 }
+const initSound = () => {
+  sound = new Howl({
+    src: [clickSfx],
+    preload: true,
+    volume: 0.5,
+  });
+};
 
 function gameOver() {
   isGameOver.value = true;
@@ -151,20 +158,18 @@ const increaseRate = () => {
   //   playRate.value = 1;
   //   comboCount.value = 0;
   // }
-  if (playRate.value < 1.4) playRate.value = playRate.value + 0.1;
+
+  if (playRate.value < 1.4) playRate.value = playRate.value + 0.05;
 };
 
 const playCorrect = () => {
-  sound = new Howl({
-    src: [clickSfx],
-    volume: 0.5,
-    rate: playRate.value,
-  });
-
-  sound.play();
+  console.log("rate", playRate.value);
+  sound.rate(playRate.value);
   increaseRate();
   startTimer();
+  sound.play();
 };
+
 const keyboardEvents = (event: KeyboardEvent) => {
   if (event.defaultPrevented) {
     return; // Do nothing if the event was already processed
@@ -196,6 +201,7 @@ const keyboardEvents = (event: KeyboardEvent) => {
 window.addEventListener("keydown", keyboardEvents, false);
 
 //start game
+initSound();
 gLoop = window.requestAnimationFrame(gameLoop);
 init(level);
 

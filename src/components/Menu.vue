@@ -47,14 +47,18 @@ import { ref, onUnmounted } from "vue";
 import clickSfx from "../assets/normal_click.mp3";
 import { Howl } from "howler";
 const store = useStore();
+let sound: any = null;
 
 const playMusic = () => {
-  const playFound = new Howl({
+  sound.play();
+};
+
+const initSound = () => {
+  sound = new Howl({
     src: [clickSfx],
+    preload: true,
     volume: 0.5,
   });
-
-  playFound.play();
 };
 const startGame = () => {
   store.updatePage("game");
@@ -67,6 +71,7 @@ const keyboardEvents = () => {
     }
   });
 };
+initSound();
 window.addEventListener("keyup", keyboardEvents);
 onUnmounted(() => {
   window.removeEventListener("keyup", keyboardEvents);
