@@ -37,6 +37,7 @@
           </div>
         </div>
       </div>
+      <p class="versionTxt roboto-mono-m">v-0.1.2</p>
     </div>
   </div>
 </template>
@@ -145,5 +146,12 @@ onUnmounted(() => {
 }
 .flex-fill {
   flex-grow: 1;
+}
+.versionTxt {
+  position: absolute;
+  bottom: 20px;
+  right: 45%;
+  font-size: 14px;
+  color: gray;
 }
 </style>
