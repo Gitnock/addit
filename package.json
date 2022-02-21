@@ -1,6 +1,6 @@
 {
   "name": "addit",
-  "version": "0.7.3",
+  "version": "0.1.2",
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
