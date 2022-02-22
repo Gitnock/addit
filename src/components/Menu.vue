@@ -16,7 +16,7 @@
           <div class="btn-top">
             <div class="btn-wrapper flex-fill">
               <button class="btn-item btn-item-online btn-pop roboto-mono-m">
-                online coming
+                online soon...
               </button>
             </div>
             <div class="btn-wrapper">
