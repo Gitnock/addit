@@ -32,7 +32,8 @@ import lastScoreVue from "@/modals/lastScore.vue";
 import { useStore } from "@/store/index";
 import { onUnmounted, inject } from "vue";
 import { ref } from "vue";
-import clickSfx from "../assets/normal_click.mp3";
+import clickSfx from "../assets/normal-click.mp3";
+import aceSfx from "../assets/ace-click.mp3";
 import { Howl } from "howler";
 const store = useStore();
 let count = ref(0);
@@ -49,10 +50,10 @@ let level: number = 1;
 let gLoop: any = null;
 let timer: NodeJS.Timeout;
 let sound: any = null;
-
+let sound2: any = null;
+let playRate = ref(1);
 //combo
 let comboTimer: NodeJS.Timeout;
-let playRate = ref(1);
 let comboCount = ref(0);
 // this function return a rundom number between min and max (both included)
 function getRndInteger(min: number, max: number) {
@@ -97,6 +98,11 @@ function init(max: number) {
 const initSound = () => {
   sound = new Howl({
     src: [clickSfx],
+    preload: true,
+    volume: 0.5,
+  });
+  sound2 = new Howl({
+    src: [aceSfx],
     preload: true,
     volume: 0.5,
   });
@@ -151,22 +157,25 @@ const startTimer = () => {
 };
 const increaseRate = () => {
   clearTimeout(comboTimer);
-  // if (comboCount.value < 5) {
-  //   comboCount.value = comboCount.value + 1;
-  // } else {
-  //   console.log("Combo", comboCount.value);
-  //   playRate.value = 1;
-  //   comboCount.value = 0;
-  // }
+  if (comboCount.value < 8) {
+    comboCount.value = comboCount.value + 1;
+  } else {
+    comboCount.value = 0;
+  }
 
   if (playRate.value < 1.4) playRate.value = playRate.value + 0.05;
+  else playRate.value = playRate.value + 0.01;
 };
 
 const playCorrect = () => {
   sound.rate(playRate.value);
+  if (comboCount.value < 8) sound.play();
+  else {
+    sound2.rate(1.3);
+    sound2.play();
+  }
   increaseRate();
   startTimer();
-  sound.play();
 };
 
 const keyboardEvents = (event: KeyboardEvent) => {
@@ -217,6 +226,10 @@ onUnmounted(() => {
   if (sound != null) {
     sound.unload();
     sound = null;
+  }
+  if (sound2 != null) {
+    sound2.unload();
+    sound2 = null;
   }
 });
 </script>
@@ -269,5 +282,23 @@ onUnmounted(() => {
   border-radius: 16px;
   font-size: 32px;
   border: none;
+}
+
+@media only screen and (max-width: 361px) {
+  .f-question {
+    font-size: 42px;
+  }
+  .btn-item {
+    width: 152px;
+  }
+  // .buttons-container {
+  //   position: absolute;
+  //   bottom: 4rem;
+  //   width: 100%;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   gap: 8px;
+  // }
 }
 </style>

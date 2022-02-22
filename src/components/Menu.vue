@@ -1,6 +1,9 @@
 <template>
   <div class="menu-main">
     <div class="menu-content">
+      <a href="https://partyapp.gg/" class="party-alpha d-flex d-center-w no-link">
+        <p class="roboto-mono-m">don't click me for PartyApp</p>
+      </a>
       <div class="app-title roboto-mono-b">ADD+IT</div>
       <div class="highscore roboto-mono-m">
         {{ store.getHighscore }}
@@ -13,7 +16,7 @@
           <div class="btn-top">
             <div class="btn-wrapper flex-fill">
               <button class="btn-item btn-item-online btn-pop roboto-mono-m">
-                play online
+                online coming
               </button>
             </div>
             <div class="btn-wrapper">
@@ -37,7 +40,7 @@
           </div>
         </div>
       </div>
-      <p class="versionTxt roboto-mono-m">v-0.1.2</p>
+      <p class="versionTxt roboto-mono-m">v-0.1.5</p>
     </div>
   </div>
 </template>
@@ -45,7 +48,7 @@
 import { useStore } from "@/store/index";
 import { ref, onUnmounted } from "vue";
 
-import clickSfx from "../assets/normal_click.mp3";
+import clickSfx from "../assets/normal-click.mp3";
 import { Howl } from "howler";
 const store = useStore();
 let sound: any = null;
@@ -153,5 +156,15 @@ onUnmounted(() => {
   right: 45%;
   font-size: 14px;
   color: gray;
+}
+.party-alpha {
+  position: absolute;
+  top: 20px;
+  // left: 50%;
+  width: 300px;
+  border-radius: 12px;
+  padding: 0 12px;
+  color: white;
+  background-color: #ff5e63;
 }
 </style>

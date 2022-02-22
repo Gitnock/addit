@@ -83,9 +83,13 @@ $c2_dark: #262526;
   flex-direction: column;
 }
 
+.no-link{
+  text-decoration: none;
+}
+
 // mobile
 @media only screen and (max-width: 768px) {
-  .d-center-w{
+  .input-tip{
     display: none;
   }
 }
