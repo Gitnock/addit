@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <p class="versionTxt roboto-mono-m">v-0.1.5</p>
+      <p class="versionTxt roboto-mono-m">v-0.1.6</p>
     </div>
   </div>
 </template>
