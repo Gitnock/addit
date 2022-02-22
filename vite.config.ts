@@ -19,6 +19,7 @@ export default defineConfig({
         short_name: 'Addit',
         description: 'Add numbers and feel the sound',
         theme_color: '#161516',
+        background_color: '#161516',
         icons: [
           {
             src: 'android-chrome-192x192.png',

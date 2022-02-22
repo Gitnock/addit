@@ -11,12 +11,20 @@
       <div class="f-question roboto-mono-m">{{ quest }}</div>
       <div class="buttons-container">
         <div class="btn-wrapper" id="btn1">
-          <button class="btn-item roboto-mono-r" @click="handleClick(btn1)">
+          <button
+            class="btn-item roboto-mono-r"
+            aria-label="left answer button"
+            @click="handleClick(btn1)"
+          >
             {{ btn1 }}
           </button>
         </div>
         <div class="btn-wrapper" id="btn2">
-          <button class="btn-item roboto-mono-r" @click="handleClick(btn2)">
+          <button
+            class="btn-item roboto-mono-r"
+            aria-label="right answer button"
+            @click="handleClick(btn2)"
+          >
             {{ btn2 }}
           </button>
         </div>
@@ -34,6 +42,7 @@ import { onUnmounted, inject } from "vue";
 import { ref } from "vue";
 import clickSfx from "../assets/normal-click.mp3";
 import aceSfx from "../assets/ace-click.mp3";
+import wrongSfx from "../assets/wrong-click.mp3";
 import { Howl } from "howler";
 const store = useStore();
 let count = ref(0);
@@ -51,6 +60,7 @@ let gLoop: any = null;
 let timer: NodeJS.Timeout;
 let sound: any = null;
 let sound2: any = null;
+let wrongSound: any = null;
 let playRate = ref(1);
 //combo
 let comboTimer: NodeJS.Timeout;
@@ -106,6 +116,11 @@ const initSound = () => {
     preload: true,
     volume: 0.5,
   });
+  wrongSound = new Howl({
+    src: [wrongSfx],
+    preload: true,
+    volume: 0.3,
+  });
 };
 
 function gameOver() {
@@ -125,6 +140,7 @@ function check(num: number) {
     playCorrect();
     init(level++);
   } else {
+    playWrong();
     gameOver();
   }
   if (isStart.value === true) {
@@ -176,6 +192,9 @@ const playCorrect = () => {
   }
   increaseRate();
   startTimer();
+};
+const playWrong = () => {
+  wrongSound.play();
 };
 
 const keyboardEvents = (event: KeyboardEvent) => {
@@ -230,6 +249,10 @@ onUnmounted(() => {
   if (sound2 != null) {
     sound2.unload();
     sound2 = null;
+  }
+  if (wrongSound != null) {
+    wrongSound.unload();
+    wrongSound = null;
   }
 });
 </script>

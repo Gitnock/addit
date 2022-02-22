@@ -15,7 +15,10 @@
         <div class="buttons-container">
           <div class="btn-top">
             <div class="btn-wrapper flex-fill">
-              <button class="btn-item btn-item-online btn-pop roboto-mono-m">
+              <button
+                class="btn-item btn-item-online btn-pop roboto-mono-m"
+                aria-labe="play online"
+              >
                 online soon...
               </button>
             </div>
@@ -23,6 +26,7 @@
               <button
                 class="btn-item btn-item-settings btn-pop roboto-mono-m"
                 @click="store.updateHighScore(0)"
+                aria-label="reset highscore"
               >
                 <i class="bx bx-reset"></i>
               </button>
@@ -33,6 +37,7 @@
               <button
                 class="btn-item btn-item-start btn-pop roboto-mono-r"
                 @click="startGame()"
+                aria-label="start game"
               >
                 start
               </button>
@@ -40,7 +45,7 @@
           </div>
         </div>
       </div>
-      <p class="versionTxt roboto-mono-m">v-0.1.6</p>
+      <p class="versionTxt roboto-mono-m">v-0.1.7</p>
     </div>
   </div>
 </template>
