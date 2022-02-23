@@ -201,6 +201,7 @@ const startTimer = () => {
     playRate.value = 1;
     comboCount.value = 0;
     comboNum.value = 0;
+    comboHandler();
   }, 1000);
 };
 const increaseRate = () => {
@@ -324,8 +325,8 @@ onUnmounted(() => {
   overflow: hidden;
   position: absolute;
   border-radius: 8px;
-  top: 41px;
-  left: 18px;
+  bottom: 180px;
+  // left: 50%;
 }
 .combo-bar {
   width: 100%;
