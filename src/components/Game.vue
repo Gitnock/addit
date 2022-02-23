@@ -12,8 +12,9 @@
         <div
           class="combo-bar"
           :style="{
-            backgroundColor: '#' + randomColor,
+            backgroundColor: randomColor,
           }"
+          id="combo-bar"
         ></div>
       </div>
       <div class="f-question roboto-mono-m">{{ quest }}</div>
@@ -74,6 +75,7 @@ let randomColor = ref("");
 //combo
 let comboTimer: NodeJS.Timeout;
 let comboCount = ref(0);
+let comboNum = ref(0);
 let isCombo = ref(false);
 // this function return a rundom number between min and max (both included)
 function getRndInteger(min: number, max: number) {
@@ -175,10 +177,19 @@ function addBtnAnim(id: string) {
     }, 50);
   }
 }
+function addColorAnim(id: string) {
+  clearTimeout(timer);
+  const element = document.getElementById(id);
+  if (element != null) {
+    element.classList.add("add-RainBow");
+    timer = setTimeout(() => {
+      element.classList.remove("add-RainBow");
+    }, 200);
+  }
+}
 const comboHandler = () => {
-  if (comboCount.value > 1) {
-    randomColor.value = Math.floor(Math.random() * 16777215).toString(16);
-    // randomColor.value = (Math.floor(Math.random() * 56) + 200).toString(16); //200 to 255
+  if (comboNum.value > 1) {
+    randomColor.value = "hsla(" + ~~(360 * Math.random()) + "," + "70%," + "80%,1)";
     isCombo.value = true;
   } else {
     isCombo.value = false;
@@ -189,7 +200,8 @@ const startTimer = () => {
   comboTimer = setTimeout(() => {
     playRate.value = 1;
     comboCount.value = 0;
-  }, 1000);
+    comboNum.value = 0;
+  }, 1600);
 };
 const increaseRate = () => {
   clearTimeout(comboTimer);
@@ -198,7 +210,7 @@ const increaseRate = () => {
   } else {
     comboCount.value = 0;
   }
-
+  comboNum.value = comboNum.value + 1;
   if (playRate.value < 1.4) playRate.value = playRate.value + 0.05;
   else playRate.value = playRate.value + 0.01;
 };
@@ -209,6 +221,7 @@ const playCorrect = () => {
   else {
     sound2.rate(1.3);
     sound2.play();
+    addColorAnim("combo-bar");
   }
   increaseRate();
   startTimer();
