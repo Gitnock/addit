@@ -17,7 +17,7 @@
             <div class="btn-wrapper flex-fill">
               <button
                 class="btn-item btn-item-online btn-pop roboto-mono-m"
-                aria-labe="play online"
+                aria-label="play online"
               >
                 online soon...
               </button>

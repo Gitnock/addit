@@ -119,7 +119,7 @@ const initSound = () => {
   wrongSound = new Howl({
     src: [wrongSfx],
     preload: true,
-    volume: 0.3,
+    volume: 1,
   });
 };
 
@@ -132,6 +132,7 @@ function gameOver() {
   if (score.value > store.getHighscore) {
     store.updateHighScore(score.value);
   }
+  playWrong();
 }
 
 function check(num: number) {
@@ -140,7 +141,6 @@ function check(num: number) {
     playCorrect();
     init(level++);
   } else {
-    playWrong();
     gameOver();
   }
   if (isStart.value === true) {
