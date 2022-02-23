@@ -201,7 +201,7 @@ const startTimer = () => {
     playRate.value = 1;
     comboCount.value = 0;
     comboNum.value = 0;
-  }, 1600);
+  }, 1000);
 };
 const increaseRate = () => {
   clearTimeout(comboTimer);
