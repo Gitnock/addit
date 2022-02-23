@@ -8,6 +8,14 @@
           :style="{ width: (100 / 2000) * count + '%' }"
         ></div>
       </div>
+      <div class="combo-bar-container" v-if="isCombo">
+        <div
+          class="combo-bar"
+          :style="{
+            backgroundColor: '#' + randomColor,
+          }"
+        ></div>
+      </div>
       <div class="f-question roboto-mono-m">{{ quest }}</div>
       <div class="buttons-container">
         <div class="btn-wrapper" id="btn1">
@@ -62,9 +70,11 @@ let sound: any = null;
 let sound2: any = null;
 let wrongSound: any = null;
 let playRate = ref(1);
+let randomColor = ref("");
 //combo
 let comboTimer: NodeJS.Timeout;
 let comboCount = ref(0);
+let isCombo = ref(false);
 // this function return a rundom number between min and max (both included)
 function getRndInteger(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -83,6 +93,7 @@ function gameLoop() {
   //GAME LOOP contents here
   if (input.value !== 0) {
     check(input.value);
+    comboHandler();
     input.value = 0;
   }
   if (gLoop != null) {
@@ -164,6 +175,15 @@ function addBtnAnim(id: string) {
     }, 50);
   }
 }
+const comboHandler = () => {
+  if (comboCount.value > 1) {
+    randomColor.value = Math.floor(Math.random() * 16777215).toString(16);
+    // randomColor.value = (Math.floor(Math.random() * 56) + 200).toString(16); //200 to 255
+    isCombo.value = true;
+  } else {
+    isCombo.value = false;
+  }
+};
 
 const startTimer = () => {
   comboTimer = setTimeout(() => {
@@ -193,6 +213,7 @@ const playCorrect = () => {
   increaseRate();
   startTimer();
 };
+
 const playWrong = () => {
   wrongSound.play();
 };
@@ -267,7 +288,7 @@ onUnmounted(() => {
   align-items: center;
   position: relative;
 }
-//bar
+//bars
 .bar-container {
   width: 100%;
   height: 24px;
@@ -281,6 +302,23 @@ onUnmounted(() => {
   height: 100%;
   transition: width 100ms linear;
   background-color: whitesmoke;
+}
+
+.combo-bar-container {
+  width: 137px;
+  height: 8px;
+  background-color: #262526;
+  overflow: hidden;
+  position: absolute;
+  border-radius: 8px;
+  top: 41px;
+  left: 18px;
+}
+.combo-bar {
+  width: 100%;
+  height: 100%;
+  transition: width 100ms linear;
+  background-color: #ffdd00;
 }
 //question
 .f-question {

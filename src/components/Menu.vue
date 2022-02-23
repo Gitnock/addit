@@ -45,7 +45,7 @@
           </div>
         </div>
       </div>
-      <p class="versionTxt roboto-mono-m">v-0.1.7</p>
+      <p class="versionTxt roboto-mono-m">v-0.1.8</p>
     </div>
   </div>
 </template>
