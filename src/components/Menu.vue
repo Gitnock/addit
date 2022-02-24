@@ -1,7 +1,11 @@
 <template>
   <div class="menu-main">
     <div class="menu-content">
-      <a href="https://partyapp.gg/" class="party-alpha d-flex d-center-w no-link">
+      <a
+        href="https://partyapp.gg/"
+        class="party-alpha d-flex d-center-w no-link"
+        v-if="false"
+      >
         <p class="roboto-mono-m">don't click me for PartyApp</p>
       </a>
       <div class="app-title roboto-mono-b">ADD+IT</div>
