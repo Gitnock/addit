@@ -49,6 +49,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: none;
 }
 .content-container {
   max-width: 400px;

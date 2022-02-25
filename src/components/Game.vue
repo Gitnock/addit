@@ -8,14 +8,9 @@
           :style="{ width: (100 / 2000) * count + '%' }"
         ></div>
       </div>
+      <div style="color: white" v-if="false">{{ fps }}</div>
       <div class="combo-bar-container" v-if="isCombo">
-        <div
-          class="combo-bar"
-          :style="{
-            backgroundColor: randomColor,
-          }"
-          id="combo-bar"
-        ></div>
+        <div class="combo-bar" :style="{ backgroundColor: randomColor }" id="combo-bar" />
       </div>
       <div class="f-question roboto-mono-m">{{ quest }}</div>
       <div class="buttons-container">
@@ -77,6 +72,9 @@ let comboTimer: NodeJS.Timeout;
 let comboCount = ref(0);
 let comboNum = ref(0);
 let isCombo = ref(false);
+//fps test
+let fps = ref(0);
+let initTime = Date.now();
 // this function return a rundom number between min and max (both included)
 function getRndInteger(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -93,6 +91,7 @@ function countDown() {
 
 function gameLoop() {
   //GAME LOOP contents here
+  // fpsTest();
   if (input.value !== 0) {
     check(input.value);
     comboHandler();
@@ -262,6 +261,11 @@ const keyboardEvents = (event: KeyboardEvent) => {
 //keyup events
 window.addEventListener("keydown", keyboardEvents, false);
 
+const fpsTest = () => {
+  let now = Date.now();
+  fps.value = Math.round(1000 / (now - initTime));
+  initTime = now;
+};
 //start game
 initSound();
 gLoop = window.requestAnimationFrame(gameLoop);
