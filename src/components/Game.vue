@@ -8,7 +8,7 @@
           :style="{ width: (100 / 2000) * count + '%' }"
         ></div>
       </div>
-      <div style="color: white" v-if="false">{{ fps }}</div>
+      <div style="color: white" v-if="false">{{ f }}</div>
       <div class="combo-bar-container" v-if="isCombo">
         <div class="combo-bar" :style="{ backgroundColor: randomColor }" id="combo-bar" />
       </div>

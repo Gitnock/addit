@@ -85,9 +85,9 @@ const keyboardEvents = () => {
   });
 };
 initSound();
-window.addEventListener("keyup", keyboardEvents);
+window.addEventListener("keyup", keyboardEvents, false);
 onUnmounted(() => {
-  window.removeEventListener("keyup", keyboardEvents);
+  window.removeEventListener("keyup", keyboardEvents, false);
 });
 </script>
 <style lang="scss" scoped>
