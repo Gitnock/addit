@@ -8,7 +8,7 @@
           <div class="body-content" id="scoreContainer">
             <div class="score-font roboto-mono-m">{{ props.score }}</div>
             <div class="combo-font roboto-mono-r">Combo:{{ props.combo }}</div>
-            <button class="share-btn" @click="shareMdn">Share</button>
+            <button class="share-btn" @click="shareScore">Share</button>
           </div>
         </div>
       </div>
@@ -24,14 +24,14 @@ const props = defineProps({
 });
 let timer: NodeJS.Timeout;
 const shareData = {
-  title: "MDN",
-  text: "Learn web development on MDN!",
-  url: "https://developer.mozilla.org",
+  title: "Addit Score",
+  text: `${props.score} on addit can you beat it?`,
+  url: "https://addit.gg",
 };
 setTimeout(() => {
   emitter.emit("endGame", "end");
 }, 1500);
-const shareMdn = () => {
+const shareScore = () => {
   if (navigator.share) {
     navigator.share(shareData);
   } else {

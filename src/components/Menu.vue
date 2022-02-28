@@ -33,10 +33,10 @@
             <div class="btn-wrapper">
               <button
                 class="btn-item btn-item-settings btn-pop roboto-mono-m"
-                @click="store.updateHighScore(0)"
+                @click="shareScore"
                 aria-label="reset highscore"
               >
-                <i class="bx bx-reset"></i>
+                <i class="bx bx-share-alt"></i>
               </button>
             </div>
           </div>
@@ -53,7 +53,7 @@
           </div>
         </div>
       </div>
-      <p class="versionTxt roboto-mono-m">v-0.2.0</p>
+      <p class="versionTxt roboto-mono-m">v-0.2.1</p>
     </div>
   </div>
 </template>
@@ -65,6 +65,11 @@ import clickSfx from "../assets/normal-click.mp3";
 import { Howl } from "howler";
 const store = useStore();
 let sound: any = null;
+const shareData = {
+  title: "Addit",
+  text: `can you beat my score? ${store.getHighscore}`,
+  url: "https://addit.gg",
+};
 
 const playMusic = () => {
   sound.play();
@@ -76,6 +81,13 @@ const initSound = () => {
     preload: true,
     volume: 0.5,
   });
+};
+const shareScore = () => {
+  if (navigator.share) {
+    navigator.share(shareData);
+  } else {
+    alert("Your browser doesn't support the Share API");
+  }
 };
 const startGame = () => {
   store.updatePage("game");
@@ -155,8 +167,8 @@ onUnmounted(() => {
 }
 .btn-item-settings {
   width: 78px;
-  background-color: #4b1b0f;
-  color: #ff5441;
+  background-color: #253851;
+  color: #0076ec;
   font-size: 32px;
 }
 .btn-item {
