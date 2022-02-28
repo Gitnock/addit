@@ -80,12 +80,19 @@ $c2_dark: #262526;
   border-color: rgb(255, 255, 255);
 }
 
+.div-active{
+  animation: popOutAnim 50ms ease-in-out alternate;
+}
+
 .input-tip{
   margin-bottom: 24px;
 }
 .d-center-w{
   justify-content: center;
   // align-items: center;
+}
+.d-center-h{
+  align-items: center;
 }
 .d-flex{
   display: flex;

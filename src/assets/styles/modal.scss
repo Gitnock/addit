@@ -20,9 +20,9 @@
   
   .modal-container {
     max-width: 271px;
-    height: 249px;
+    // height: 249px;
     margin: 0px auto;
-    padding: 24px;
+    padding:15px;
     background-color: $c2_dark;
     border-radius: 28px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
@@ -69,9 +69,6 @@
     .modal-container-big {
       padding: 12px;
       height: 100%;
-    }
-    .modal-container {
-      width: 340px;
     }
     .modal-button {
       font-size: 16px;

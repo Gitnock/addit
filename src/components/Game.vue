@@ -35,7 +35,7 @@
       </div>
     </div>
     <teleport to="body">
-      <lastScoreVue :score="score" v-if="isGameOver" />
+      <lastScoreVue :score="score" :combo="comboHighScore" v-if="isGameOver" />
     </teleport>
   </div>
 </template>
@@ -71,6 +71,7 @@ let randomColor = ref("");
 let comboTimer: NodeJS.Timeout;
 let comboCount = ref(0);
 let comboNum = ref(0);
+let comboHighScore = ref(0);
 let isCombo = ref(false);
 //fps test
 let fps = ref(0);
@@ -144,6 +145,9 @@ function gameOver() {
   if (score.value > store.getHighscore) {
     store.updateHighScore(score.value);
   }
+  if (comboHighScore.value > store.getCombo) {
+    store.updateCombo(comboHighScore.value);
+  }
   playWrong();
 }
 
@@ -211,6 +215,8 @@ const increaseRate = () => {
     comboCount.value = 0;
   }
   comboNum.value = comboNum.value + 1;
+  if (comboNum.value > comboHighScore.value) comboHighScore.value = comboNum.value;
+
   if (playRate.value < 1.4) playRate.value = playRate.value + 0.05;
   else playRate.value = playRate.value + 0.01;
 };
@@ -370,14 +376,13 @@ onUnmounted(() => {
   .btn-item {
     width: 152px;
   }
-  // .buttons-container {
-  //   position: absolute;
-  //   bottom: 4rem;
-  //   width: 100%;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   gap: 8px;
-  // }
+}
+@media only screen and (max-height: 668px) {
+  .f-question {
+    font-size: 42px;
+  }
+  .btn-item {
+    width: 152px;
+  }
 }
 </style>

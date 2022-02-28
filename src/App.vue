@@ -15,6 +15,14 @@ if (localStorage.getItem("highscore") === null) {
     store.updateHighScore(parseInt(hightscore));
   }
 }
+if (localStorage.getItem("combo") === null) {
+  localStorage.setItem("combo", "0");
+} else {
+  const combo = localStorage.getItem("combo");
+  if (typeof combo === "string") {
+    store.updateCombo(parseInt(combo));
+  }
+}
 </script>
 
 <template>

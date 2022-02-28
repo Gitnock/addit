@@ -5,9 +5,10 @@
         <div class="modal-header"></div>
 
         <div class="modal-body">
-          <div class="body-content">
-            <div class="modal-title roboto-mono-m">your just got</div>
+          <div class="body-content" id="scoreContainer">
             <div class="score-font roboto-mono-m">{{ props.score }}</div>
+            <div class="combo-font roboto-mono-r">Combo:{{ props.combo }}</div>
+            <button class="share-btn" @click="shareMdn">Share</button>
           </div>
         </div>
       </div>
@@ -18,11 +19,25 @@
 import { inject } from "vue";
 const emitter: any = inject("emitter"); // Inject `emitter`
 const props = defineProps({
-  score: Number,
+  score: { type: Number, default: 0 },
+  combo: { type: Number, default: 0 },
 });
+let timer: NodeJS.Timeout;
+const shareData = {
+  title: "MDN",
+  text: "Learn web development on MDN!",
+  url: "https://developer.mozilla.org",
+};
 setTimeout(() => {
   emitter.emit("endGame", "end");
-}, 1000);
+}, 1500);
+const shareMdn = () => {
+  if (navigator.share) {
+    navigator.share(shareData);
+  } else {
+    alert("Your browser doesn't support the Share API");
+  }
+};
 </script>
 <style lang="scss" scoped>
 @import "@/assets/styles/modal.scss";
@@ -42,5 +57,18 @@ setTimeout(() => {
 .score-font {
   font-size: 52px;
   color: white;
+}
+.combo-font {
+  font-size: 26px;
+  color: white;
+}
+.share-btn {
+  width: 240px;
+  height: 60px;
+  background-color: #253851;
+  border: none;
+  border-radius: 12px;
+  color: #0076ec;
+  font-size: 24px;
 }
 </style>

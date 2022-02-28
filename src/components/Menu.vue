@@ -9,9 +9,13 @@
         <p class="roboto-mono-m">don't click me for PartyApp</p>
       </a>
       <div class="app-title roboto-mono-b">ADD+IT</div>
-      <div class="highscore roboto-mono-m">
-        {{ store.getHighscore }}
+      <div class="d-flex-column d-center-h">
+        <div class="highscore roboto-mono-m">
+          {{ store.getHighscore }}
+        </div>
+        <div class="comboscore roboto-mono-m">Combo: {{ store.getCombo }}</div>
       </div>
+
       <div class="bot-container">
         <div class="d-flex d-center-w input-tip">
           <div class="bx-flashing">press [space] to start, arrow keys to select</div>
@@ -49,7 +53,7 @@
           </div>
         </div>
       </div>
-      <p class="versionTxt roboto-mono-m">v-0.1.9</p>
+      <p class="versionTxt roboto-mono-m">v-0.2.0</p>
     </div>
   </div>
 </template>
@@ -77,17 +81,18 @@ const startGame = () => {
   store.updatePage("game");
   playMusic();
 };
-const keyboardEvents = () => {
-  document.addEventListener("keydown", (e) => {
-    if (e.code === "Space") {
-      startGame();
-    }
-  });
+const keyboardEvents = (e: KeyboardEvent) => {
+  if (e.defaultPrevented) {
+    return; // Do nothing if the event was already processed
+  }
+  if (e.key === " ") {
+    startGame();
+  }
 };
 initSound();
-window.addEventListener("keyup", keyboardEvents, false);
+window.addEventListener("keydown", keyboardEvents, false);
 onUnmounted(() => {
-  window.removeEventListener("keyup", keyboardEvents, false);
+  window.removeEventListener("keydown", keyboardEvents, false);
 });
 </script>
 <style lang="scss" scoped>
@@ -111,6 +116,9 @@ onUnmounted(() => {
 }
 .highscore {
   font-size: 101px;
+}
+.comboscore {
+  font-size: 18px;
 }
 
 .bot-container {

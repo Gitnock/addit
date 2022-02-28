@@ -8,6 +8,7 @@ export const useStore = defineStore('main', {
     // all these properties will have their type inferred automatically
     highscore: 0,
     page: 'home',
+    combo: 0,
   }),
   getters: {
     getPage(state): String {
@@ -15,6 +16,9 @@ export const useStore = defineStore('main', {
     },
     getHighscore(state): number {
         return state.highscore;
+    },
+    getCombo(state): number {
+        return state.combo;
     }
   },
   actions: {
@@ -25,5 +29,9 @@ export const useStore = defineStore('main', {
     updatePage(page: string) {
       this.page = page;
     },
+    updateCombo(combo: number) {
+      this.combo = combo;
+      localStorage.setItem('combo', combo.toString());
+    }
   },
 });
