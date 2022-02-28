@@ -67,7 +67,7 @@ const store = useStore();
 let sound: any = null;
 const shareData = {
   title: "Addit",
-  text: `can you beat my score? ${store.getHighscore}`,
+  text: `${store.getHighscore} on addit can you beat it?`,
   url: "https://addit.gg",
 };
 
