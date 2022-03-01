@@ -8,6 +8,9 @@
       >
         <p class="roboto-mono-m">don't click me for PartyApp</p>
       </a>
+      <button class="btn-reset" @click="isReset = !isReset">
+        <i class="bx bx-reset"></i>
+      </button>
       <div class="app-title roboto-mono-b">ADD+IT</div>
       <div class="d-flex-column d-center-h">
         <div class="highscore roboto-mono-m">
@@ -53,18 +56,24 @@
           </div>
         </div>
       </div>
-      <p class="versionTxt roboto-mono-m">v-0.2.1</p>
+      <p class="versionTxt roboto-mono-m">v-0.2.2</p>
     </div>
+    <teleport to="body">
+      <resetScore v-if="isReset" />
+    </teleport>
   </div>
 </template>
 <script lang="ts" setup>
 import { useStore } from "@/store/index";
-import { ref, onUnmounted } from "vue";
+import { ref, onUnmounted, inject } from "vue";
 
 import clickSfx from "../assets/normal-click.mp3";
 import { Howl } from "howler";
+import resetScore from "@/modals/resetHigh.vue";
+
 const store = useStore();
 let sound: any = null;
+let isReset = ref(false);
 const shareData = {
   title: "Addit",
   text: `${store.getHighscore} on addit can you beat it?`,
@@ -101,7 +110,20 @@ const keyboardEvents = (e: KeyboardEvent) => {
     startGame();
   }
 };
+
+//init menu
 initSound();
+
+//event bus
+const emitter: any = inject("emitter");
+emitter.on("onScore", () => {
+  store.updateHighScore(0);
+  isReset.value = false;
+});
+emitter.on("onModal", () => {
+  isReset.value = false;
+});
+
 window.addEventListener("keydown", keyboardEvents, false);
 onUnmounted(() => {
   window.removeEventListener("keydown", keyboardEvents, false);
@@ -195,5 +217,16 @@ onUnmounted(() => {
   padding: 0 12px;
   color: white;
   background-color: #ff5e63;
+}
+
+.btn-reset {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 32px;
 }
 </style>

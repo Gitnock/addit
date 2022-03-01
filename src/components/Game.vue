@@ -42,8 +42,7 @@
 <script lang="ts" setup>
 import lastScoreVue from "@/modals/lastScore.vue";
 import { useStore } from "@/store/index";
-import { onUnmounted, inject } from "vue";
-import { ref } from "vue";
+import { ref, onUnmounted, inject } from "vue";
 import clickSfx from "../assets/normal-click.mp3";
 import aceSfx from "../assets/ace-click.mp3";
 import wrongSfx from "../assets/wrong-click.mp3";
@@ -67,6 +66,7 @@ let sound2: any = null;
 let wrongSound: any = null;
 let playRate = ref(1);
 let randomColor = ref("");
+let fluctuationLevel = ref(10);
 //combo
 let comboTimer: NodeJS.Timeout;
 let comboCount = ref(0);
@@ -112,12 +112,22 @@ function init(max: number) {
   quest.value = `${num1} + ${num2}`;
   if (getRndInteger(0, 1) === 0) {
     btn1.value = ans.value;
-    btn2.value = getRndInteger(1, max);
+    if (max > 5) btn2.value = wrongAlgro();
+    else btn2.value = getRndInteger(1, max);
   } else {
-    btn1.value = getRndInteger(1, max);
+    if (max > 5) btn1.value = wrongAlgro();
+    else btn1.value = getRndInteger(1, max);
     btn2.value = ans.value;
   }
 }
+const wrongAlgro = () => {
+  let wrongAns: number = 0;
+  //wrong answer not equal to answer and is either higher or lower than answer if answer is not zero
+  const min = ans.value - 3 > 0 ? ans.value - 3 : 1;
+  wrongAns = getRndInteger(min, ans.value + 3);
+  return wrongAns;
+};
+
 const initSound = () => {
   sound = new Howl({
     src: [clickSfx],
