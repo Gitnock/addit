@@ -18,7 +18,7 @@
           <button
             class="btn-item roboto-mono-r"
             aria-label="left answer button"
-            @click="handleClick(btn1)"
+            @click="input = btn1"
           >
             {{ btn1 }}
           </button>
@@ -27,7 +27,7 @@
           <button
             class="btn-item roboto-mono-r"
             aria-label="right answer button"
-            @click="handleClick(btn2)"
+            @click="input = btn2"
           >
             {{ btn2 }}
           </button>
@@ -45,8 +45,9 @@ import { useStore } from "@/store/index";
 import { ref, onUnmounted, inject } from "vue";
 import clickSfx from "../assets/normal-click.mp3";
 import aceSfx from "../assets/ace-click.mp3";
-import wrongSfx from "../assets/wrong-click.mp3";
+import wrongSfx from "../assets/wrong-click2.mp3";
 import { Howl } from "howler";
+const isMobile = localStorage.mobile || window.navigator.maxTouchPoints > 1;
 const store = useStore();
 let count = ref(0);
 let quest = ref("");
@@ -58,7 +59,7 @@ let score = ref(0);
 let isStart = ref(true);
 let isGameOver = ref(false);
 let interval: any;
-let level: number = 1;
+let level: number = 13;
 let gLoop: any = null;
 let timer: NodeJS.Timeout;
 let sound: any = null;
@@ -66,7 +67,6 @@ let sound2: any = null;
 let wrongSound: any = null;
 let playRate = ref(1);
 let randomColor = ref("");
-let fluctuationLevel = ref(10);
 //combo
 let comboTimer: NodeJS.Timeout;
 let comboCount = ref(0);
@@ -110,21 +110,49 @@ function init(max: number) {
   const num2 = getRndInteger(1, max);
   ans.value = num1 + num2;
   quest.value = `${num1} + ${num2}`;
+  let wrong: number = 0;
   if (getRndInteger(0, 1) === 0) {
     btn1.value = ans.value;
-    if (max > 5) btn2.value = wrongAlgro();
-    else btn2.value = getRndInteger(1, max);
+    do {
+      if (ans.value > 11) wrong = wrongAlgro();
+      else wrong = getRndInteger(ans.value - 3 > 1 ? ans.value - 3 : 1, ans.value + 3);
+    } while (wrong <= 0 || wrong === ans.value);
+    btn2.value = wrong;
   } else {
-    if (max > 5) btn1.value = wrongAlgro();
-    else btn1.value = getRndInteger(1, max);
     btn2.value = ans.value;
+    do {
+      if (ans.value > 11) wrong = wrongAlgro();
+      else wrong = getRndInteger(ans.value - 3 > 1 ? ans.value - 3 : 1, ans.value + 3);
+    } while (wrong <= 0 || wrong === ans.value);
+    btn1.value = wrong;
   }
 }
 const wrongAlgro = () => {
   let wrongAns: number = 0;
-  //wrong answer not equal to answer and is either higher or lower than answer if answer is not zero
-  const min = ans.value - 3 > 0 ? ans.value - 3 : 1;
-  wrongAns = getRndInteger(min, ans.value + 3);
+  const ansLength = ans.value.toString().length;
+  if (getRndInteger(0, 1)) {
+    switch (ansLength) {
+      case 2:
+        const tenth = Math.floor((ans.value / 10) % 10);
+        if (tenth > 3)
+          wrongAns =
+            getRndInteger(tenth - 2 > 1 ? tenth - 2 : 1, tenth + 2) * 10 +
+            (ans.value % 10);
+        else
+          wrongAns =
+            getRndInteger(tenth - 1 > 1 ? tenth - 1 : 1, tenth + 1) * 10 +
+            (ans.value % 10);
+        break;
+      case 3:
+        wrongAns = getRndInteger(ans.value - 10, ans.value + 10);
+        break;
+      default:
+        wrongAns = getRndInteger(ans.value - 10, ans.value + 10);
+        break;
+    }
+  } else {
+    wrongAns = getRndInteger(ans.value - 3, ans.value + 3);
+  }
   return wrongAns;
 };
 
@@ -176,9 +204,9 @@ function check(num: number) {
 function endGame() {
   store.updatePage("home");
 }
-const handleClick = (ans: number) => {
-  input.value = ans;
-};
+// const handleClick = (ans: number) => {
+//   input.value = ans;
+// };
 
 function addBtnAnim(id: string) {
   clearTimeout(timer);
@@ -275,7 +303,7 @@ const keyboardEvents = (event: KeyboardEvent) => {
   event.preventDefault();
 };
 //keyup events
-window.addEventListener("keydown", keyboardEvents, false);
+if (!isMobile) window.addEventListener("keydown", keyboardEvents, false);
 
 const fpsTest = () => {
   let now = Date.now();

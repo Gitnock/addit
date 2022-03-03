@@ -8,7 +8,11 @@
       >
         <p class="roboto-mono-m">don't click me for PartyApp</p>
       </a>
-      <button class="btn-reset" @click="isReset = !isReset">
+      <button
+        class="btn-reset"
+        @click="isReset = !isReset"
+        aria-label="reset game button"
+      >
         <i class="bx bx-reset"></i>
       </button>
       <div class="app-title roboto-mono-b">ADD+IT</div>
@@ -28,7 +32,7 @@
             <div class="btn-wrapper flex-fill">
               <button
                 class="btn-item btn-item-online btn-pop roboto-mono-m"
-                aria-label="play online"
+                aria-label="play online button"
               >
                 online soon...
               </button>
@@ -37,7 +41,7 @@
               <button
                 class="btn-item btn-item-settings btn-pop roboto-mono-m"
                 @click="shareScore"
-                aria-label="reset highscore"
+                aria-label="share highscore button"
               >
                 <i class="bx bx-share-alt"></i>
               </button>
@@ -48,7 +52,7 @@
               <button
                 class="btn-item btn-item-start btn-pop roboto-mono-r"
                 @click="startGame()"
-                aria-label="start game"
+                aria-label="start game button"
               >
                 start
               </button>
@@ -71,6 +75,7 @@ import clickSfx from "../assets/normal-click.mp3";
 import { Howl } from "howler";
 import resetScore from "@/modals/resetHigh.vue";
 
+const isMobile = localStorage.mobile || window.navigator.maxTouchPoints > 1;
 const store = useStore();
 let sound: any = null;
 let isReset = ref(false);
@@ -81,6 +86,7 @@ const shareData = {
 };
 
 const playMusic = () => {
+  initSound();
   sound.play();
 };
 
@@ -99,6 +105,7 @@ const shareScore = () => {
   }
 };
 const startGame = () => {
+  initSound();
   store.updatePage("game");
   playMusic();
 };
@@ -112,7 +119,6 @@ const keyboardEvents = (e: KeyboardEvent) => {
 };
 
 //init menu
-initSound();
 
 //event bus
 const emitter: any = inject("emitter");
@@ -124,7 +130,7 @@ emitter.on("onModal", () => {
   isReset.value = false;
 });
 
-window.addEventListener("keydown", keyboardEvents, false);
+if (!isMobile) window.addEventListener("keydown", keyboardEvents, false);
 onUnmounted(() => {
   window.removeEventListener("keydown", keyboardEvents, false);
 });

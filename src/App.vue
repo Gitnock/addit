@@ -58,6 +58,9 @@ html {
   align-items: center;
   justify-content: center;
   touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 .content-container {
   max-width: 400px;
