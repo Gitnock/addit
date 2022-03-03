@@ -59,7 +59,7 @@ let score = ref(0);
 let isStart = ref(true);
 let isGameOver = ref(false);
 let interval: any;
-let level: number = 13;
+let level: number = 1;
 let gLoop: any = null;
 let timer: NodeJS.Timeout;
 let sound: any = null;

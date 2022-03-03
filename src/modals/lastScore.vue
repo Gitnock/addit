@@ -8,7 +8,7 @@
           <div class="body-content" id="scoreContainer">
             <div class="score-font roboto-mono-m">{{ props.score }}</div>
             <div class="combo-font roboto-mono-r">Combo:{{ props.combo }}</div>
-            <button class="share-btn" @click="shareScore">Share</button>
+            <!-- <button class="share-btn" @click="shareScore">Share</button> -->
           </div>
         </div>
       </div>
@@ -57,10 +57,12 @@ const shareScore = () => {
 .score-font {
   font-size: 52px;
   color: white;
+  margin-top: 32px;
 }
 .combo-font {
   font-size: 26px;
   color: white;
+  margin: 0 32px;
 }
 .share-btn {
   width: 240px;
