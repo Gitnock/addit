@@ -1,6 +1,6 @@
 {
   "name": "addit",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
@@ -12,7 +12,8 @@
     "howler": "^2.2.3",
     "mitt": "^3.0.0",
     "pinia": "^2.0.9",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-gtag": "^2.0.1"
   },
   "devDependencies": {
     "@types/howler": "^2.2.5",

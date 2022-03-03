@@ -60,7 +60,7 @@
           </div>
         </div>
       </div>
-      <p class="versionTxt roboto-mono-m">v-0.2.2</p>
+      <p class="versionTxt roboto-mono-m">v-0.2.3</p>
     </div>
     <teleport to="body">
       <resetScore v-if="isReset" />
