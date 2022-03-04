@@ -29,10 +29,11 @@
         </div>
         <div class="buttons-container">
           <div class="btn-top">
-            <div class="btn-wrapper flex-fill">
+            <div class="btn-wrapper flex-fill" id="online">
               <button
                 class="btn-item btn-item-online btn-pop roboto-mono-m"
                 aria-label="play online button"
+                @click="onOnline"
               >
                 online soon...
               </button>
@@ -48,7 +49,7 @@
             </div>
           </div>
           <div class="btn-bot">
-            <div class="btn-wrapper-full">
+            <div class="btn-wrapper-full" id="start">
               <button
                 class="btn-item btn-item-start btn-pop roboto-mono-r"
                 @click="startGame()"
@@ -79,16 +80,30 @@ const isMobile = localStorage.mobile || window.navigator.maxTouchPoints > 1;
 const store = useStore();
 let sound: any = null;
 let isReset = ref(false);
+let timer: NodeJS.Timeout;
 const shareData = {
   title: "Addit",
   text: `${store.getHighscore} on addit can you beat it?`,
   url: "https://addit.gg",
 };
+const onOnline = () => {
+  addBtnAnim("online");
+};
 
 const playMusic = () => {
-  initSound();
   sound.play();
 };
+
+function addBtnAnim(id: string) {
+  clearTimeout(timer);
+  const element = document.getElementById(id);
+  if (element != null) {
+    element.classList.add("btn-active");
+    timer = setTimeout(() => {
+      element.classList.remove("btn-active");
+    }, 50);
+  }
+}
 
 const initSound = () => {
   sound = new Howl({
@@ -105,10 +120,11 @@ const shareScore = () => {
   }
 };
 const startGame = () => {
-  initSound();
-  store.updatePage("game");
+  addBtnAnim("start");
   playMusic();
+  store.updatePage("game");
 };
+
 const keyboardEvents = (e: KeyboardEvent) => {
   if (e.defaultPrevented) {
     return; // Do nothing if the event was already processed
@@ -119,7 +135,7 @@ const keyboardEvents = (e: KeyboardEvent) => {
 };
 
 //init menu
-
+initSound();
 //event bus
 const emitter: any = inject("emitter");
 emitter.on("onScore", () => {

@@ -18,7 +18,7 @@
           <button
             class="btn-item roboto-mono-r"
             aria-label="left answer button"
-            @click="input = btn1"
+            @click="handleClick(btn1, 'btn1')"
           >
             {{ btn1 }}
           </button>
@@ -27,7 +27,7 @@
           <button
             class="btn-item roboto-mono-r"
             aria-label="right answer button"
-            @click="input = btn2"
+            @click="handleClick(btn2, 'btn2')"
           >
             {{ btn2 }}
           </button>
@@ -45,7 +45,7 @@ import { useStore } from "@/store/index";
 import { ref, onUnmounted, inject } from "vue";
 import clickSfx from "../assets/normal-click.mp3";
 import aceSfx from "../assets/ace-click.mp3";
-import wrongSfx from "../assets/wrong-click2.mp3";
+import wrongSfx from "../assets/wrong-click.mp3";
 import { Howl } from "howler";
 const isMobile = localStorage.mobile || window.navigator.maxTouchPoints > 1;
 const store = useStore();
@@ -62,14 +62,15 @@ let interval: any;
 let level: number = 1;
 let gLoop: any = null;
 let timer: NodeJS.Timeout;
+let barTimer: NodeJS.Timeout;
 let sound: any = null;
 let sound2: any = null;
 let wrongSound: any = null;
-let playRate = ref(1);
+let playRate = 1;
 let randomColor = ref("");
 //combo
 let comboTimer: NodeJS.Timeout;
-let comboCount = ref(0);
+let comboCount = 0;
 let comboNum = ref(0);
 let comboHighScore = ref(0);
 let isCombo = ref(false);
@@ -178,6 +179,7 @@ function gameOver() {
   isGameOver.value = true;
   clearInterval(interval);
   clearTimeout(timer);
+  clearTimeout(barTimer);
   window.cancelAnimationFrame(gLoop);
   gLoop = null;
   if (score.value > store.getHighscore) {
@@ -191,8 +193,8 @@ function gameOver() {
 
 function check(num: number) {
   if (num === ans.value) {
-    score.value++;
     playCorrect();
+    score.value++;
     init(level++);
   } else {
     gameOver();
@@ -204,9 +206,10 @@ function check(num: number) {
 function endGame() {
   store.updatePage("home");
 }
-// const handleClick = (ans: number) => {
-//   input.value = ans;
-// };
+const handleClick = (ans: number, id: string) => {
+  input.value = ans;
+  addBtnAnim(id);
+};
 
 function addBtnAnim(id: string) {
   clearTimeout(timer);
@@ -219,15 +222,25 @@ function addBtnAnim(id: string) {
   }
 }
 function addColorAnim(id: string) {
-  clearTimeout(timer);
+  clearTimeout(barTimer);
   const element = document.getElementById(id);
   if (element != null) {
     element.classList.add("add-RainBow");
-    timer = setTimeout(() => {
+    barTimer = setTimeout(() => {
       element.classList.remove("add-RainBow");
     }, 200);
   }
 }
+// function addActive(id: string) {
+//   clearTimeout(timer);
+//   const element = document.getElementById(id);
+//   if (element != null) {
+//     element.classList.add("active");
+//     timer = setTimeout(() => {
+//       element.classList.remove("active");
+//     }, 50);
+//   }
+// }
 const comboHandler = () => {
   if (comboNum.value > 1) {
     randomColor.value = "hsla(" + ~~(360 * Math.random()) + "," + "70%," + "80%,1)";
@@ -239,29 +252,29 @@ const comboHandler = () => {
 
 const startTimer = () => {
   comboTimer = setTimeout(() => {
-    playRate.value = 1;
-    comboCount.value = 0;
+    playRate = 1;
+    comboCount = 0;
     comboNum.value = 0;
     comboHandler();
   }, 1000);
 };
 const increaseRate = () => {
   clearTimeout(comboTimer);
-  if (comboCount.value < 8) {
-    comboCount.value = comboCount.value + 1;
+  if (comboCount < 8) {
+    comboCount = comboCount + 1;
   } else {
-    comboCount.value = 0;
+    comboCount = 0;
   }
   comboNum.value = comboNum.value + 1;
   if (comboNum.value > comboHighScore.value) comboHighScore.value = comboNum.value;
 
-  if (playRate.value < 1.4) playRate.value = playRate.value + 0.05;
-  else playRate.value = playRate.value + 0.01;
+  if (playRate < 1.4) playRate = playRate + 0.05;
+  else playRate = playRate + 0.01;
 };
 
 const playCorrect = () => {
-  sound.rate(playRate.value);
-  if (comboCount.value < 8) sound.play();
+  sound.rate(playRate);
+  if (comboCount < 8) sound.play();
   else {
     sound2.rate(1.3);
     sound2.play();

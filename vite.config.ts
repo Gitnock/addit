@@ -8,6 +8,9 @@ export default defineConfig({
   plugins: [
     vue(),
     VitePWA({
+      workbox: {
+        globPatterns: ["assets/*"],
+      }, 
       includeAssets: [
         'favicon.svg',
         'favicon.ico',

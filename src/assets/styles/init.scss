@@ -56,10 +56,10 @@ $c2_dark: #262526;
     border-color: rgba(255, 255, 255, 0);
     // transition: border-color ease-out;
     padding: 4px;
-    &:active {
-      animation: popOutAnim 50ms ease-in-out alternate;
-      border-color: rgb(255, 255, 255);
-    }
+    // &:active {
+    //   animation: popOutAnim 50ms ease-in-out alternate;
+    //   border-color: rgb(255, 255, 255);
+    // }
   }
 
   .btn-wrapper-full{
@@ -69,10 +69,10 @@ $c2_dark: #262526;
     border-color: rgba(255, 255, 255, 0);
     // transition: border-color ease-out;
     padding: 4px;
-    &:active {
-      animation: popOutAnim 50ms ease-in-out alternate;
-      border-color: rgb(255, 255, 255);
-    }
+    // &:active {
+    //   animation: popOutAnim 50ms ease-in-out alternate;
+    //   border-color: rgb(255, 255, 255);
+    // }
   }
 
 .btn-active{

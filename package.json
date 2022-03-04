@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "serve": "vite preview --host"
   },
   "dependencies": {
     "@fontsource/roboto-mono": "^4.5.1",
