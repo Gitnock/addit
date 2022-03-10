@@ -1,0 +1,22 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "gg.addit.twa",
+      "sha256_cert_fingerprints": [
+        "43:B9:20:25:20:15:A9:D7:F4:8C:9E:AC:C5:55:88:7B:CF:0E:39:15:A0:7B:7A:51:3E:DE:AB:93:82:6E:65:D9"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "gg.addit.twa",
+      "sha256_cert_fingerprints": [
+        "02:6B:43:41:0C:90:5B:3A:BB:97:37:D3:D9:8C:10:34:A4:90:A5:F9:4D:C7:A6:04:E3:7E:1C:76:55:07:F0:33"
+      ]
+    }
+  }
+]
