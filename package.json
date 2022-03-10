@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@fontsource/roboto-mono": "^4.5.1",
+    "canvas-confetti": "^1.5.1",
     "firebase": "^9.6.4",
     "howler": "^2.2.3",
     "mitt": "^3.0.0",
@@ -17,6 +18,7 @@
     "vue-router": "^4.0.13"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.4.2",
     "@types/howler": "^2.2.5",
     "@types/node": "^17.0.8",
     "@vitejs/plugin-vue": "^2.0.0",

@@ -46,7 +46,12 @@ import { ref, onUnmounted, inject } from "vue";
 import clickSfx from "../assets/normal-click.mp3";
 import aceSfx from "../assets/ace-click.mp3";
 import wrongSfx from "../assets/wrong-click.mp3";
+import highscoreSfx from "../assets/highscore.mp3";
 import { Howl } from "howler";
+import confetti from "canvas-confetti";
+confetti.Promise = new Promise<void>((resolve, reject) => {
+  resolve();
+});
 const isMobile = localStorage.mobile || window.navigator.maxTouchPoints > 1;
 const store = useStore();
 let count = ref(0);
@@ -66,6 +71,7 @@ let barTimer: NodeJS.Timeout;
 let sound: any = null;
 let sound2: any = null;
 let wrongSound: any = null;
+let highscoreSound: any = null;
 let playRate = 1;
 let randomColor = ref("");
 //combo
@@ -157,6 +163,14 @@ const wrongAlgro = () => {
   return wrongAns;
 };
 
+const initConfetti = () => {
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 },
+  });
+  playHighscore();
+};
 const initSound = () => {
   sound = new Howl({
     src: [clickSfx],
@@ -173,6 +187,11 @@ const initSound = () => {
     preload: true,
     volume: 1,
   });
+  highscoreSound = new Howl({
+    src: [highscoreSfx],
+    preload: true,
+    volume: 0.5,
+  });
 };
 
 function gameOver() {
@@ -184,11 +203,13 @@ function gameOver() {
   gLoop = null;
   if (score.value > store.getHighscore) {
     store.updateHighScore(score.value);
+    initConfetti();
+  } else {
+    playWrong();
   }
   if (comboHighScore.value > store.getCombo) {
     store.updateCombo(comboHighScore.value);
   }
-  playWrong();
 }
 
 function check(num: number) {
@@ -287,6 +308,9 @@ const playCorrect = () => {
 const playWrong = () => {
   wrongSound.play();
 };
+const playHighscore = () => {
+  highscoreSound.play();
+};
 
 const keyboardEvents = (event: KeyboardEvent) => {
   if (event.defaultPrevented) {
@@ -338,18 +362,22 @@ onUnmounted(() => {
   window.cancelAnimationFrame(gLoop);
   window.removeEventListener("keydown", keyboardEvents, false);
 
-  if (sound != null) {
-    sound.unload();
-    sound = null;
-  }
-  if (sound2 != null) {
-    sound2.unload();
-    sound2 = null;
-  }
-  if (wrongSound != null) {
-    wrongSound.unload();
-    wrongSound = null;
-  }
+  // if (sound != null) {
+  //   sound.unload();
+  //   sound = null;
+  // }
+  // if (sound2 != null) {
+  //   sound2.unload();
+  //   sound2 = null;
+  // }
+  // if (wrongSound != null) {
+  //   wrongSound.unload();
+  //   wrongSound = null;
+  // }
+  // if (highscoreSound != null) {
+  //   highscoreSound.unload();
+  //   highscoreSound = null;
+  // }
 });
 </script>
 <style lang="scss" scoped>

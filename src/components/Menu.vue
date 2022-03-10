@@ -33,7 +33,7 @@
               <button
                 class="btn-item btn-item-online btn-pop roboto-mono-m"
                 aria-label="play online button"
-                @click="onOnline"
+                @click="onOnline()"
               >
                 online soon...
               </button>
@@ -75,7 +75,6 @@ import { ref, onUnmounted, inject } from "vue";
 import clickSfx from "../assets/normal-click.mp3";
 import { Howl } from "howler";
 import resetScore from "@/modals/resetHigh.vue";
-
 const isMobile = localStorage.mobile || window.navigator.maxTouchPoints > 1;
 const store = useStore();
 let sound: any = null;
