@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import assetlinks from '../../.well-known/assetlinks.json';
 
 const routes: Array<RouteRecordRaw> = [
 
