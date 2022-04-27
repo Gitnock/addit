@@ -26,6 +26,9 @@ export const useStore = defineStore('main', {
     }
   },
   actions: {
+    updateOnlinePage(page: string) {
+        this.onlinePage = page;
+    },
     updateHighScore(score: number) {
       this.highscore = score;
       localStorage.setItem('highscore', score.toString());
