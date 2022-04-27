@@ -75,7 +75,6 @@ import { useRouter, useRoute } from "vue-router";
 import clickSfx from "../assets/normal-click.mp3";
 import { Howl } from "howler";
 import resetScore from "@/modals/resetHigh.vue";
-import router from "@/router";
 const isMobile = localStorage.mobile || window.navigator.maxTouchPoints > 1;
 const store = useStore();
 let sound: any = null;
@@ -89,7 +88,7 @@ const shareData = {
 };
 const onOnline = () => {
   addBtnAnim("online");
-  router.push({ name: "online" });
+  route.push(`/online/${generateId()}`);
 };
 
 const playMusic = () => {
@@ -134,6 +133,10 @@ const keyboardEvents = (e: KeyboardEvent) => {
   if (e.key === " ") {
     startGame();
   }
+};
+
+const generateId = () => {
+  return Math.floor(Math.random() * Date.now())
 };
 
 //init menu

@@ -4,6 +4,7 @@ import router from './router';
 import { createPinia } from 'pinia';
 import mitt from 'mitt';
 import VueGtag from 'vue-gtag';
+import { initializeApp } from 'firebase/app';
 const emitter = mitt();
 
 const app = createApp(App);

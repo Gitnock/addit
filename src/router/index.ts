@@ -13,6 +13,12 @@ const routes: Array<RouteRecordRaw> = [
       path: '/online',
       name: 'online',
       component: Online,
+      children: [
+        {
+          path: '/online/:id',
+          name: 'online-id',
+          component: Online,
+        },]
     }
 ]
 

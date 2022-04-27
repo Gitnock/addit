@@ -9,6 +9,7 @@ export const useStore = defineStore('main', {
     highscore: 0,
     page: 'home',
     combo: 0,
+    onlinePage: 'lobby',
   }),
   getters: {
     getPage(state): String {
@@ -19,6 +20,9 @@ export const useStore = defineStore('main', {
     },
     getCombo(state): number {
         return state.combo;
+    },
+    getOnlinePage(state): String {
+        return state.onlinePage;
     }
   },
   actions: {
